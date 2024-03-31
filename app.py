@@ -4,8 +4,7 @@ import requests
 
 app = Flask(__name__)
 
-# Load users and logs from CSV files
-users_df = pd.read_csv('data/users.csv')
+# Load logs from CSV file
 logs_df = pd.read_csv('data/logs.csv')
 
 # Load malicious URLs from CSV file
@@ -27,7 +26,7 @@ def detect_malicious(url):
             else:
                 return "Malicious"
         except:
-            return "The provided url is not logged in my Malicious URL list.This maybe considered as a Safe URL"
+            return "Invalid"
 
 @app.route('/')
 def home():
@@ -46,9 +45,11 @@ def login():
 
 @app.route('/register', methods=['GET', 'POST'])
 def register():
+    global users_df  # Declare users_df as a global variable
     if request.method == 'POST':
         username = request.form['username']
         password = request.form['password']
+        users_df = pd.read_csv('data/users.csv')  # Load users_df when registering
         if username not in users_df['Username'].values:
             users_df = users_df.append({'Username': username, 'Password': password}, ignore_index=True)
             users_df.to_csv('data/users.csv', index=False)
