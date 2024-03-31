@@ -1,0 +1,8 @@
+logdata,Result,URL,Username
+,Invalid,"@app.route('/detect', methods=['GET', 'POST']) def detect():     if request.method == 'POST':         url = request.form['url']         result = detect_malicious(url)         username = request.form['username'] if 'username' in request.form else 'Guest'         save_logs(username, url, result)         return render_template('results.html', url=url, result=result)     # If it's a GET request or no username was found     return render_template('detect.html', username='Guest')",Guest
+,Invalid,www.google.com,Guest
+,Malicious,yourbittorrent.com/?q=anthony-hamilton-soulife,Guest
+,Malicious,yourbittorrent.com/?q=anthony-hamilton-soulife,Guest
+,The URL is not available in the list of Malicious URLs Provided. Seems to be a Safe URL,google.com,Guest
+,Invalid,google,Guest
+,The provided url is not logged in my Malicious URL list.This maybe considered as a Safe URL,www.google.com,Guest
